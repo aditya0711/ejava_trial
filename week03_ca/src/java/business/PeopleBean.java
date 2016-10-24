@@ -31,7 +31,7 @@ public class PeopleBean {
         query.setParameter("email", email);
         People people = (People) query.getSingleResult();
       
-        String pid = people.getPid();
+        String pid = people.getEmail();
         //    String pid="0e4d8b2c";
         System.out.println("pid " + pid);
         return pid;
