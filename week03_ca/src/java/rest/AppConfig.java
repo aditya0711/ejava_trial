@@ -5,20 +5,11 @@
  */
 package rest;
 
-import java.util.Set;
+
+import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
-/**
- *
- * @author samru
- */
+@ApplicationPath("/api")
 public class AppConfig extends Application {
-
-    @Override
-    public Set<Class<?>> getClasses() {
-        return super.getClasses(); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    
-    
+	
 }

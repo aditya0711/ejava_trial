@@ -10,6 +10,7 @@ import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -20,18 +21,17 @@ public class PeopleBean {
     
     @PersistenceContext private EntityManager em;
     
-    public void addPeople(String name,String email)
+    public void addPeople(People people)
     {
-        String tid = UUID.randomUUID().toString().substring(0, 8);
-        People people=new People();
-        people.setPid(tid);
-        people.setName(name);
-        people.setEmail(email);
-        
+        System.out.println("name" + people.getName());
+        System.out.println("name" + people.getPid());
         em.persist(people);
     }
-    
-    
-    
-    
+    public String findByEmail(String email){
+        TypedQuery<People> query = em.createNamedQuery(
+				"Customer.findByEmail", People.class);
+        query.setParameter("email", "%" + email + "%");
+        String pid = query.getSingleResult().getPid();
+        return pid;
+    }
 }
