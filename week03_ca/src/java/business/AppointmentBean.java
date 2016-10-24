@@ -21,21 +21,22 @@ public class AppointmentBean {
     
      @PersistenceContext private EntityManager em;
      
-     public List<Appointment> getAllApointment() {
-         
-         
-		TypedQuery<Appointment> query = em.createNamedQuery(
-				"Appointment.findAll.findAll", Appointment.class);
-                
-          
-		return (query.getResultList());
-	}
+//     public List<Appointment> getAllApointment() {
+//         
+//         
+//		TypedQuery<Appointment> query = em.createNamedQuery(
+//				"Appointment.findAll.findAll", Appointment.class);
+//                
+//          
+//		return (query.getResultList());
+//	}
      public List<Appointment> getAllApointment(String pid) {
          
-       // Query q = em.createQuery("SELECT a.* FROM appointment a where a.pid =:pid");
+       // Query q = em.createQuery("SELECT a.* FROM appointments.appointment a where a.pid =:pid");
        // q.setParameter("pid", pid);
         
-         TypedQuery<Appointment> query =  em.createQuery("SELECT a.* FROM appointment a where a.pid =:pid", Appointment.class);
+         TypedQuery<Appointment> query =  em.createQuery("SELECT a FROM Appointment a,People p where  p.pid=:pid", Appointment.class);
+         
          query.setParameter("pid", pid);
         
          

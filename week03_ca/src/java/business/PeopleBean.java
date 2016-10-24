@@ -6,11 +6,10 @@
 package business;
 
 import entity.People;
-import java.util.UUID;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
+import javax.persistence.Query;
 
 /**
  *
@@ -28,10 +27,13 @@ public class PeopleBean {
         em.persist(people);
     }
     public String findByEmail(String email){
-        TypedQuery<People> query = em.createNamedQuery(
-				"Customer.findByEmail", People.class);
-        query.setParameter("email", "%" + email + "%");
-        String pid = query.getSingleResult().getPid();
+        Query query = em.createNamedQuery("People.findByEmail");
+        query.setParameter("email", email);
+        People people = (People) query.getSingleResult();
+      
+        String pid = people.getPid();
+        //    String pid="0e4d8b2c";
+        System.out.println("pid " + pid);
         return pid;
     }
 }

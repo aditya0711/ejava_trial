@@ -44,10 +44,13 @@ public class AppointmentResource {
     
      @GET
      @Produces(MediaType.APPLICATION_JSON)
-     
-    public List<Appointment> getAllAppointments(@QueryParam("email") String email)
+     @Path("{email}")
+    public List<Appointment> getAllAppointments(@PathParam("{email}") String email)
     {
-      String pid= peopleBean. findByEmail(email);
+     //System.out.println("Inside Appt rsc find by email1" + email);
+
+      String pid= peopleBean.findByEmail("barney@gmail.com");
+      System.out.println("Inside Appt rsc find by email2");
       appointments=appointmentBean.getAllApointment(pid);
       
       return  appointments;            

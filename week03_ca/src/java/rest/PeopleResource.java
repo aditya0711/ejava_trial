@@ -16,6 +16,7 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.MultivaluedMap;
 import javax.ws.rs.core.Response;
@@ -50,11 +51,13 @@ public class PeopleResource {
         
         @GET
         @Produces(MediaType.APPLICATION_JSON)
-        @Path("{email}")
-        public String findByEmail(String email){
-          
+        
+        public Response findByEmail( @QueryParam("email") String email){
+                       System.out.println(">>Insidr findbyemail of pplrsc" + email);
+
             String pid = peopleBean.findByEmail(email);
-            return pid;
+            System.out.println(">>Insidr findbyemail of pplrsc" + pid);
+            return Response.ok().build();
         }
 
     
