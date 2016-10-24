@@ -25,7 +25,7 @@ import javax.ws.rs.core.MediaType;
  * @author Aditya Aggarwal
  */
 @ApplicationScoped
-@Path("entity.people")
+@Path("people")
 public class PeopleFacadeREST extends AbstractFacade<People> {
 
     @PersistenceContext(unitName = "week03_caPU")

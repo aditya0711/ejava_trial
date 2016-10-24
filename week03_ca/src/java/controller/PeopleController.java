@@ -6,6 +6,9 @@
 package controller;
 
 import javax.inject.Named;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
 
 /**
  *
@@ -17,6 +20,7 @@ public class PeopleController {
         
         private String name;
         private String email;
+        private Client client = ClientBuilder.newClient();
 
     public String getName() {
         return name;
@@ -35,6 +39,9 @@ public class PeopleController {
     }
     
     public void add(){
+        
+        WebTarget target=client.target("http://localhost:8080/week03ca/api/people");
+        
         
     }
     
