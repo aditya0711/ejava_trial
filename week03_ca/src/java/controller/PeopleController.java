@@ -5,6 +5,8 @@
  */
 package controller;
 
+import entity.People;
+import java.util.UUID;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -41,6 +43,9 @@ public class PeopleController {
     public void add(){
         
         WebTarget target=client.target("http://localhost:8080/week03ca/api/people");
+        
+       
+        
         
         
     }
