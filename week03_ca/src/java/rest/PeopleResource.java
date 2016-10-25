@@ -8,9 +8,12 @@ package rest;
 import business.AppointmentBean;
 import business.PeopleBean;
 import entity.People;
+import java.util.Optional;
 import java.util.UUID;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
+import javax.json.Json;
+import javax.json.JsonObjectBuilder;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -30,10 +33,10 @@ import javax.ws.rs.core.Response;
 public class PeopleResource {
     
         @EJB private PeopleBean peopleBean;
-        @EJB private AppointmentBean appointmentBean;
-
+        
 	@POST
 	@Consumes("application/x-www-form-urlencoded")
+        
         public Response post(MultivaluedMap<String, String> formData) {
  
 		System.out.println(">>> name: " + formData.getFirst("name"));
@@ -53,11 +56,26 @@ public class PeopleResource {
         @Produces(MediaType.APPLICATION_JSON)
         
         public Response findByEmail( @QueryParam("email") String email){
-                       System.out.println(">>Insidr findbyemail of pplrsc" + email);
+            
+            Optional<People>  people = peopleBean.findByEmail(email);
+            
+            if(!people.isPresent()) 
+            
+                return (Response
+                        .status(Response.Status.NOT_FOUND)
+                        .entity("Not found: email=" + email)
+                        .build());
+            
+            JsonObjectBuilder apptBuilder = Json.createObjectBuilder();
+             apptBuilder.add("pid", people.get().getPid());
+             apptBuilder.add("email", people.get().getEmail());
+             apptBuilder.add("name", people.get().getName());
 
-            String pid = peopleBean.findByEmail(email);
-            System.out.println(">>Insidr findbyemail of pplrsc" + pid);
-            return Response.ok().build();
+
+
+        return(Response.ok(apptBuilder.build()).build());
+            
+            
         }
 
     

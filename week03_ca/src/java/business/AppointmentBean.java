@@ -24,18 +24,16 @@ public class AppointmentBean {
      
 
 
-     public List<Appointment> getAllApointment(String pid) {
+     public List<Appointment> getAllApointment(String emailId) {
          
-     
-         TypedQuery<Appointment> query =  em.createQuery("SELECT a.appointmentList FROM People a WHERE a.email=:pid",  Appointment.class);
-      
-   
-         query.setParameter("pid",pid);
-         System.out.println("query "+query.toString());
-        
-         
-         return query.getResultList();
-	
+       TypedQuery<Appointment> query =  em.createQuery("SELECT a.appointmentList FROM People a WHERE a.email=:emailId",  Appointment.class);
+       query.setParameter("emailId",emailId);
+       return query.getResultList();
+       
 	}
+
+    public void bookAppointment(Appointment appointment) {
+        em.persist(appointment);
+    }
     
 }

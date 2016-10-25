@@ -6,6 +6,7 @@
 package business;
 
 import entity.People;
+import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,14 +27,12 @@ public class PeopleBean {
         System.out.println("name" + people.getPid());
         em.persist(people);
     }
-    public String findByEmail(String email){
+    
+    public Optional<People> findByEmail(String email){
         Query query = em.createNamedQuery("People.findByEmail");
         query.setParameter("email", email);
         People people = (People) query.getSingleResult();
-      
-        String pid = people.getEmail();
-        //    String pid="0e4d8b2c";
-        System.out.println("pid " + pid);
-        return pid;
+        System.out.println("pid " + people.getPid());
+        return (Optional.ofNullable(people));
     }
 }
