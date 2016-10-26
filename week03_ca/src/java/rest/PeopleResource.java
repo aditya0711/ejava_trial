@@ -5,7 +5,7 @@
  */
 package rest;
 
-import business.AppointmentBean;
+
 import business.PeopleBean;
 import entity.People;
 import java.util.Optional;
@@ -54,27 +54,23 @@ public class PeopleResource {
         
         @GET
         @Produces(MediaType.APPLICATION_JSON)
-        
+       
         public Response findByEmail( @QueryParam("email") String email){
             
-            Optional<People>  people = peopleBean.findByEmail(email);
+             Optional<People> p = peopleBean.findByEmail(email);
             
-            if(!people.isPresent()) 
-            
-                return (Response
-                        .status(Response.Status.NOT_FOUND)
-                        .entity("Not found: email=" + email)
-                        .build());
-            
+            if(p != null) {
+                
             JsonObjectBuilder apptBuilder = Json.createObjectBuilder();
-             apptBuilder.add("pid", people.get().getPid());
-             apptBuilder.add("email", people.get().getEmail());
-             apptBuilder.add("name", people.get().getName());
-
-
-
-        return(Response.ok(apptBuilder.build()).build());
-            
+            apptBuilder.add("pid", p.get().getPid());
+            apptBuilder.add("email", p.get().getEmail());
+            apptBuilder.add("name", p.get().getName());
+            return(Response.ok(apptBuilder.build()).build());
+            }else
+            {
+                return (Response.status(Response.Status.NOT_FOUND).build());
+                    
+            }
             
         }
 

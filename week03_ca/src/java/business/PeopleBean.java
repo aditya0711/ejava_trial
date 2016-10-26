@@ -9,8 +9,9 @@ import entity.People;
 import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -24,15 +25,21 @@ public class PeopleBean {
     public void addPeople(People people)
     {
         System.out.println("name" + people.getName());
-        System.out.println("name" + people.getPid());
+        System.out.println("id" + people.getPid());
         em.persist(people);
     }
     
     public Optional<People> findByEmail(String email){
-        Query query = em.createNamedQuery("People.findByEmail");
+      TypedQuery<People> query = em.createNamedQuery("People.findByEmail", People.class);
+
         query.setParameter("email", email);
-        People people = (People) query.getSingleResult();
-        System.out.println("pid " + people.getPid());
-        return (Optional.ofNullable(people));
+        try{
+            People people=query.getSingleResult();
+            return Optional.ofNullable(people);
+           }catch(NoResultException e){
+            return null;
+            }
     }
+    
+    
 }
